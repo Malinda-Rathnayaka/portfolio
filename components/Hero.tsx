@@ -1,100 +1,136 @@
 "use client";
+
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Rocket, Sparkles, ArrowDown } from "lucide-react";
-import Starfield from "./Starfield";
-import NebulaField from "./NebulaField";
-import FloatingPlanet from "./FloatingPlanet";
+import Image from "next/image";
+import ParticleNetwork from "./ParticleNetwork";
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
 
-  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+
+  const go = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <section id="hero" ref={ref} className="relative min-h-[100svh] flex items-center overflow-hidden">
-      <motion.div style={{ y: bgY }} className="absolute inset-0">
-        <Starfield density={160} />
-        <NebulaField />
+    <section
+      id="hero"
+      ref={ref}
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#020617] text-white pt-24 lg:pt-0"
+    >
+      {/* Background Layer with Interactive Space Blue Particles */}
+      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0">
+        <ParticleNetwork />
+
+        {/* Top Glowing Cosmic Arc (Deep Blue & Sky Arc) */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[450px] sm:w-[750px] h-[180px] sm:h-[250px] bg-gradient-to-b from-blue-600 via-sky-400 to-transparent rounded-[100%] blur-[50px] opacity-75 pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] sm:w-[500px] h-[90px] sm:h-[130px] bg-sky-100 rounded-[100%] blur-[25px] opacity-40 pointer-events-none" />
+
+        {/* Deep Ambient Space Blue Glows */}
+        <div className="absolute top-1/3 left-1/4 -translate-y-1/2 w-[450px] h-[450px] bg-blue-900/30 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute bottom-10 right-1/3 w-[400px] h-[400px] bg-indigo-900/25 rounded-full blur-[150px] pointer-events-none" />
       </motion.div>
 
-      <FloatingPlanet scrollYProgress={scrollYProgress} />
+      {/* Hero Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 w-full min-h-[100svh] flex flex-col lg:flex-row items-center justify-between gap-12">
+        
+        {/* Left Column: Heading, Subtitle & Spinning Circular Badge */}
+        <div className="w-full lg:w-[60%] flex flex-col justify-center py-12 lg:py-20 z-10">
+          
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white leading-[1.05] tracking-tight">
+            <motion.span
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="block"
+            >
+              Transforming Ideas
+            </motion.span>
+            <motion.span
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="block mt-2"
+            >
+              Into{" "}
+              <span className="bg-gradient-to-r from-blue-400 via-sky-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(56,189,248,0.4)]">
+                Digital Reality
+              </span>
+            </motion.span>
+          </h1>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <span className="inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-cyan-300/90 border border-cyan-400/25 rounded-full px-4 py-1.5 bg-cyan-400/5">
-            <Sparkles className="w-3 h-3" /> Available for new missions
-          </span>
-        </motion.div>
-
-        <h1 className="mt-8 text-5xl sm:text-6xl md:text-8xl font-bold text-white leading-[0.95] tracking-tight">
-          <motion.span
-            initial={{ y: "110%", opacity: 0 }}
-            animate={{ y: "0%", opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="block overflow-hidden"
+          {/* Subtext Paragraph */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="mt-6 max-w-xl text-slate-300/80 text-base sm:text-lg leading-relaxed font-normal"
           >
-            Engineering
-          </motion.span>
-          <motion.span
-            initial={{ y: "110%", opacity: 0 }}
-            animate={{ y: "0%", opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="block overflow-hidden"
+            I&apos;m a full-stack engineer and digital architect specializing in
+            building high-performance Web applications, interactive interfaces,
+            and scalable digital solutions with aesthetic precision.
+          </motion.p>
+
+          {/* Circular Badge Button CTA */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="mt-10 sm:mt-12"
           >
-            beyond the{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent">
-              atmosphere.
-            </span>
-          </motion.span>
-        </h1>
+            <button
+              onClick={() => go("projects")}
+              className="group relative flex items-center justify-center w-28 h-28 sm:w-32 sm:h-32 rounded-full border border-blue-500/30 hover:border-sky-400/80 transition-colors duration-300 bg-blue-950/20 backdrop-blur-md"
+            >
+              {/* Spinning Circular Text SVG */}
+              <motion.svg
+                animate={{ rotate: 360 }}
+                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-0 w-full h-full text-slate-300 group-hover:text-sky-300 transition-colors duration-300"
+                viewBox="0 0 100 100"
+              >
+                <path
+                  id="circlePath"
+                  fill="none"
+                  d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+                />
+                <text className="text-[9.5px] font-mono tracking-[0.24em] fill-current uppercase">
+                  <textPath href="#circlePath" startOffset="0%">
+                    • MY PROJECTS • MY PROJECTS
+                  </textPath>
+                </text>
+              </motion.svg>
+            </button>
+          </motion.div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="mt-8 max-w-xl text-slate-400 text-base md:text-lg leading-relaxed"
-        >
-          I&apos;m Avery — a product engineer who designs and builds interfaces
-          with the precision of mission-critical systems and the polish of
-          a launch broadcast.
-        </motion.p>
-
+        {/* Right Column: Portrait Image Frame */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="mt-10 flex flex-wrap items-center gap-4"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
+          className="w-full lg:w-[40%] h-[50vh] sm:h-[65vh] lg:h-full lg:absolute bottom-0 right-0 flex items-end justify-center lg:justify-end pointer-events-none z-10"
         >
-          <motion.button
-            whileHover={{ scale: 1.04, boxShadow: "0 0 30px rgba(139,92,246,0.55)" }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => go("projects")}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white font-medium px-6 py-3.5 rounded-full text-sm shadow-[0_0_20px_rgba(139,92,246,0.35)]"
-          >
-            <Rocket className="w-4 h-4" /> View my work
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.04, borderColor: "rgba(255,255,255,0.5)" }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => go("contact")}
-            className="inline-flex items-center gap-2 border border-white/20 text-white font-medium px-6 py-3.5 rounded-full text-sm hover:bg-white/5 transition-colors"
-          >
-            Get in touch
-          </motion.button>
+          <div className="relative w-full max-w-md lg:max-w-none h-full min-h-[420px] lg:min-h-[700px] flex items-end">
+            <Image
+              src="/my-portrait.png"
+              alt="Portrait"
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 40vw"
+              className="object-contain object-bottom right-0 drop-shadow-[0_10px_35px_rgba(0,0,0,0.8)]"
+            />
+          </div>
         </motion.div>
-      </div>
 
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500"
-      >
-        <span className="text-[10px] tracking-[0.3em] uppercase font-mono">Scroll</span>
-        <ArrowDown className="w-3.5 h-3.5" />
-      </motion.div>
+      </div>
     </section>
   );
 }
