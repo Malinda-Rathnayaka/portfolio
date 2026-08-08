@@ -1,39 +1,130 @@
 "use client";
-import { useRef } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
-import Reveal from "./Reveal";
-import SectionHeader from "./SectionHeader";
-import { EXPERIENCE } from "@/lib/data";
+
+import { motion } from "framer-motion";
+import ParticleNetwork from "./ParticleNetwork";
+
+const EXPERIENCES = [
+  {
+    period: "2024 — NOW",
+    role: "Staff Frontend Engineer",
+    company: "Halcyon Systems",
+    description:
+      "Leading the design-engineering guild; shipped the motion framework used across 12 product teams.",
+  },
+  {
+    period: "2021 — 2024",
+    role: "Senior UI Architect",
+    company: "Orbital Dynamics",
+    description:
+      "Engineered high-frequency data visualization tools for mission-critical operations and real-time telemetry platforms.",
+  },
+  {
+    period: "2019 — 2021",
+    role: "Frontend Engineer",
+    company: "Apex Tech",
+    description:
+      "Architected scalable design systems and high-performance Web applications for international enterprise clients.",
+  },
+];
 
 export default function Experience() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.4"] });
-  const pathLength = useSpring(scrollYProgress, { stiffness: 60, damping: 20 });
-
   return (
-    <section id="experience" className="relative py-28 md:py-36" ref={ref}>
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
-        <SectionHeader eyebrow="Transmission 04" title="Mission history" subtitle="The trajectory that got me here." />
-        <div className="relative pl-10 md:pl-14">
-          <div className="absolute left-[7px] md:left-[11px] top-2 bottom-2 w-px bg-white/10" />
-          <motion.div
-            className="absolute left-[7px] md:left-[11px] top-2 bottom-2 w-px origin-top bg-gradient-to-b from-cyan-400 via-purple-400 to-fuchsia-400"
-            style={{ scaleY: pathLength }}
-          />
-          <div className="space-y-14">
-            {EXPERIENCE.map((e, i) => (
-              <Reveal key={e.role + e.year} delay={i * 0.05} y={24}>
-                <div className="relative">
-                  <span className="absolute -left-10 md:-left-14 top-1.5 w-4 h-4 rounded-full bg-void border-2 border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.7)]" />
-                  <span className="text-xs font-mono tracking-widest uppercase text-cyan-300/80">{e.year}</span>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mt-1.5">{e.role}</h3>
-                  <p className="text-sm text-purple-300/90 mt-0.5">{e.org}</p>
-                  <p className="text-slate-400 mt-2.5 leading-relaxed max-w-2xl">{e.desc}</p>
+    <section
+      id="experience"
+      className="relative w-full py-28 bg-[#020617] text-white overflow-hidden z-10"
+    >
+      {/* Background Layer with Interactive Cursor Particle Network */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <ParticleNetwork />
+
+        {/* Ambient Deep Blue Radial Glows */}
+        <div className="absolute top-1/3 left-10 w-[400px] h-[400px] bg-blue-900/15 rounded-full blur-[160px]" />
+        <div className="absolute bottom-10 right-10 w-[350px] h-[350px] bg-sky-900/15 rounded-full blur-[140px]" />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10">
+        
+        {/* Section Tagline Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-3 text-cyan-400 font-mono text-xs uppercase tracking-widest"
+        >
+          <span className="w-8 h-[1px] bg-cyan-400/60" />
+          TRANSMISSION 04
+        </motion.div>
+
+        {/* Title */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-4xl sm:text-5xl font-extrabold mt-3 tracking-tight text-white"
+        >
+          Mission history
+        </motion.h2>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mt-4 max-w-2xl text-slate-300/80 text-base sm:text-lg leading-relaxed font-normal"
+        >
+          The trajectory that got me here.
+        </motion.p>
+
+        {/* Timeline Container */}
+        <div className="mt-16 relative pl-6 sm:pl-8 max-w-3xl">
+          
+          {/* Vertical Glowing Timeline Line */}
+          <div className="absolute left-[11px] top-3 bottom-3 w-[2px] bg-gradient-to-b from-cyan-400 via-blue-500/60 to-transparent pointer-events-none" />
+
+          <div className="flex flex-col gap-12 sm:gap-16">
+            {EXPERIENCES.map((exp, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 + idx * 0.15 }}
+                className="relative pl-8 sm:pl-10 group"
+              >
+                {/* Orbital Node Ring Marker */}
+                <div className="absolute -left-[18px] top-1.5 w-[24px] h-[24px] rounded-full border-2 border-cyan-400 bg-[#020617] shadow-[0_0_12px_rgba(34,211,238,0.6)] flex items-center justify-center transition-transform duration-300 group-hover:scale-125">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-300" />
                 </div>
-              </Reveal>
+
+                {/* Period Badge */}
+                <span className="font-mono text-xs uppercase tracking-widest text-cyan-400 block font-medium">
+                  {exp.period}
+                </span>
+
+                {/* Role Title */}
+                <h3 className="text-2xl sm:text-3xl font-extrabold mt-2 text-white tracking-tight">
+                  {exp.role}
+                </h3>
+
+                {/* Company Name */}
+                <h4 className="text-purple-300/90 text-sm sm:text-base font-medium mt-1">
+                  {exp.company}
+                </h4>
+
+                {/* Description */}
+                <p className="mt-3 text-slate-300/80 text-base sm:text-lg leading-relaxed font-normal max-w-2xl">
+                  {exp.description}
+                </p>
+              </motion.div>
             ))}
           </div>
+
         </div>
+
       </div>
     </section>
   );

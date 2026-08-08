@@ -75,13 +75,13 @@ export default function ParticleNetwork() {
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        // Particle Dot: Bright Sky Blue / Cyan
+        // Particle Node
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(56, 189, 248, 0.8)";
         ctx.fill();
 
-        // Connecting Lines: Deep Cobalt Blue
+        // Connecting Lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -98,7 +98,7 @@ export default function ParticleNetwork() {
           }
         }
 
-        // Mouse Connection Lines: Electric Cyan Glow
+        // Mouse Interactivity Lines
         const mdx = p.x - mouse.x;
         const mdy = p.y - mouse.y;
         const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
