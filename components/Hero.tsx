@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ParticleNetwork from "./ParticleNetwork";
@@ -15,7 +16,53 @@ const TECH_STACK = [
   "Kotlin",
 ];
 
+const PHRASES = [
+  "MALINDA RATHNAYAKA",
+  "FULL-STACK DEVELOPER",
+  "SOFTWARE ENGINEER",
+  "IT UNDERGRADUATE",
+];
+
 export default function Hero() {
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentPhrase = PHRASES[phraseIndex];
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting && charIndex < currentPhrase.length) {
+      // Type next character
+      timer = setTimeout(() => {
+        setCharIndex((prev) => prev + 1);
+      }, 85);
+    } else if (!isDeleting && charIndex === currentPhrase.length) {
+      // Pause at full phrase before erasing
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, 2000);
+    } else if (isDeleting && charIndex > 0) {
+      // Erase character
+      timer = setTimeout(() => {
+        setCharIndex((prev) => prev - 1);
+      }, 45);
+    } else if (isDeleting && charIndex === 0) {
+      // Move to next phrase
+      setIsDeleting(false);
+      setPhraseIndex((prev) => (prev + 1) % PHRASES.length);
+    }
+
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, phraseIndex]);
+
+  // Compute text rendering parts (Highlights final word in cyan)
+  const currentText = PHRASES[phraseIndex].slice(0, charIndex);
+  const words = currentText.split(" ");
+  const hasMultipleWords = words.length > 1;
+  const firstPart = hasMultipleWords ? words.slice(0, -1).join(" ") : currentText;
+  const lastWord = hasMultipleWords ? words[words.length - 1] : "";
+
   return (
     <section
       id="hero"
@@ -37,37 +84,30 @@ export default function Hero() {
           {/* Left Column: Text & Action Buttons */}
           <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
             
-            {/* Transmission Badge / Status */}
+            {/* Status Badge */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 text-cyan-400 font-mono text-xs uppercase tracking-[0.25em] mb-4"
+              className="inline-flex items-center text-cyan-400 font-mono text-xs uppercase tracking-[0.25em] mb-4"
             >
-              <span className="w-6 h-[1px] bg-cyan-400/60" />
-              TRANSMISSION 01 // IT UNDERGRADUATE
+              // IT UNDERGRADUATE
             </motion.div>
 
-            {/* Main Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold tracking-tight uppercase text-white leading-none"
-            >
-              MALINDA <br className="hidden sm:inline" />
-              <span className="text-cyan-400">RATHNAYAKA</span>
-            </motion.h1>
+            {/* Continuous Typing/Erasing Loop Heading */}
+            <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold tracking-tight uppercase text-white leading-none flex flex-wrap items-center justify-center lg:justify-start gap-x-3 min-h-[1.3em]">
+              {hasMultipleWords ? (
+                <>
+                  <span className="text-white">{firstPart}</span>
+                  <span className="text-cyan-400">{lastWord}</span>
+                </>
+              ) : (
+                <span className="text-white">{currentText}</span>
+              )}
 
-            {/* Title */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-4 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase text-slate-300 font-semibold"
-            >
-              Full-Stack Developer &amp; IT Undergraduate
-            </motion.p>
+              {/* Glowing Typewriter Cursor */}
+              <span className="inline-block w-2.5 sm:w-3.5 h-8 sm:h-12 md:h-14 lg:h-16 bg-cyan-400 animate-pulse shadow-[0_0_12px_rgba(34,211,238,0.8)]" />
+            </h1>
 
             {/* Subtitle / Bio */}
             <motion.p
@@ -122,29 +162,24 @@ export default function Hero() {
 
           </div>
 
-          {/* Right Column: Clean Original Profile Photo */}
+          {/* Right Column: Profile Photo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, x: 20 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.25 }}
             className="lg:col-span-5 flex flex-col items-center justify-center relative"
           >
-            {/* Outer Frame */}
             <div className="relative p-3 rounded-3xl bg-slate-900/60 border border-slate-800/90 backdrop-blur-xl shadow-2xl">
-              
-              {/* Photo Container */}
               <div className="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-950">
                 <Image
-                  src="/profile.jpg"
+                  src="/profile_2.jpg"
                   alt="Malinda Rathnayaka"
                   fill
                   priority
                   className="object-cover object-center"
                 />
               </div>
-
             </div>
-
           </motion.div>
 
         </div>

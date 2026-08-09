@@ -71,7 +71,7 @@ export default function About() {
           className="flex items-center gap-3 text-cyan-400 font-mono text-xs uppercase tracking-widest"
         >
           <span className="w-8 h-[1px] bg-cyan-400/60" />
-          TRANSMISSION 02
+          
         </motion.div>
 
         {/* Section Title */}

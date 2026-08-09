@@ -6,11 +6,11 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains" });
 
 export const metadata: Metadata = {
-  title: "Avery Nova — Product Engineer",
+  title: "Malinda Rathnayaka ",
   description:
     "Product engineer specializing in cinematic, high-performance web interfaces. Available for staff-level roles and contract missions.",
   openGraph: {
-    title: "Avery Nova — Product Engineer",
+    title: "Malinda Rathnayaka ",
     description: "Engineering beyond the atmosphere.",
     type: "website",
   },

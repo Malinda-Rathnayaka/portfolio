@@ -1,6 +1,6 @@
 import { Code2, Palette, Server, Database, Cpu, Layers } from "lucide-react";
 
-export const NAV = ["About", "Skills", "Projects", "Experience", "Contact"] as const;
+export const NAV = ["About", "Skills", "Projects", "JOURNEY", "Contact"] as const;
 
 export const SKILLS = [
   { name: "Frontend Engineering", icon: Code2, items: ["React", "Next.js", "TypeScript", "Tailwind"] },

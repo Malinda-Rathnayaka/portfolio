@@ -164,7 +164,7 @@ export default function Projects() {
           className="flex items-center gap-3 text-cyan-400 font-mono text-xs uppercase tracking-widest"
         >
           <span className="w-8 h-[1px] bg-cyan-400/60" />
-          TRANSMISSION 03
+          
         </motion.div>
 
         <motion.h2
