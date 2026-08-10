@@ -46,7 +46,7 @@ export default function ProjectCard({
       className="group relative flex flex-col justify-between p-5 rounded-2xl bg-[#0b0e1e]/80 border border-slate-800/80 backdrop-blur-md shadow-[0_0_25px_rgba(0,0,0,0.6)] hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all duration-300"
     >
       <div>
-        {/* Top Preview Image Container (Unoptimized to prevent Next.js domain errors) */}
+        {/* Top Preview Image Container */}
         <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-slate-800/80 bg-slate-950">
           <Image
             src={project.image}
@@ -55,7 +55,7 @@ export default function ProjectCard({
             unoptimized
             className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
           />
-          {/* Dark overlay */}
+          {/* Dark Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#0b0e1e]/60 via-transparent to-transparent pointer-events-none" />
         </div>
 
@@ -88,29 +88,52 @@ export default function ProjectCard({
           ))}
         </div>
 
-        {/* Disabled Action Buttons */}
-        <div className="flex items-center gap-2 pt-2 border-t border-slate-800/60">
-          <a
-            href="#"
-            onClick={(e) => e.preventDefault()}
-            className="flex-1 py-2 rounded-lg bg-slate-800/40 border border-slate-700/50 text-slate-500 font-mono text-[11px] uppercase tracking-wider font-semibold cursor-not-allowed text-center"
-            title="Link disabled until full setup"
-          >
-            LIVE DEMO
-          </a>
+        {/* Action Buttons Bar */}
+        <div className="relative z-10 flex items-center gap-2 pt-2 border-t border-slate-800/60">
+          {/* Live Demo Button */}
+          {project.liveUrl ? (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-2 rounded-lg bg-slate-800/80 border border-slate-700/80 hover:border-cyan-400/80 text-slate-200 hover:text-cyan-300 font-mono text-[11px] uppercase tracking-wider font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
+            >
+              LIVE DEMO
+            </a>
+          ) : (
+            <button
+              disabled
+              className="flex-1 py-2 rounded-lg bg-slate-800/40 border border-slate-700/50 text-slate-500 font-mono text-[11px] uppercase tracking-wider font-semibold cursor-not-allowed text-center"
+              title="Live demo link unavailable"
+            >
+              LIVE DEMO
+            </button>
+          )}
 
-          <a
-            href="#"
-            onClick={(e) => e.preventDefault()}
-            className="flex-1 py-2 rounded-lg bg-slate-800/40 border border-slate-700/50 text-slate-500 font-mono text-[11px] uppercase tracking-wider font-semibold cursor-not-allowed text-center"
-            title="Link disabled until full setup"
-          >
-            CODE
-          </a>
+          {/* GitHub Code Button */}
+          {project.githubUrl ? (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 py-2 rounded-lg bg-slate-800/80 border border-slate-700/80 hover:border-cyan-400/80 text-slate-200 hover:text-cyan-300 font-mono text-[11px] uppercase tracking-wider font-semibold text-center transition-all duration-200 shadow-sm cursor-pointer"
+            >
+              CODE
+            </a>
+          ) : (
+            <button
+              disabled
+              className="flex-1 py-2 rounded-lg bg-slate-800/40 border border-slate-700/50 text-slate-500 font-mono text-[11px] uppercase tracking-wider font-semibold cursor-not-allowed text-center"
+              title="Repository link unavailable"
+            >
+              CODE
+            </button>
+          )}
 
+          {/* Case Study Modal Trigger */}
           <button
             onClick={() => onOpenCaseStudy(project)}
-            className="flex-1 py-2 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 hover:text-cyan-200 font-mono text-[11px] uppercase tracking-wider font-semibold transition-all duration-200 text-center"
+            className="flex-1 py-2 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 hover:text-cyan-200 font-mono text-[11px] uppercase tracking-wider font-semibold transition-all duration-200 text-center cursor-pointer"
           >
             CASE STUDY
           </button>

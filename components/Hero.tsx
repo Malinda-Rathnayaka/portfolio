@@ -134,12 +134,14 @@ export default function Hero() {
                 [ VIEW MY WORK ]
               </a>
 
+              {/* Opens PDF in a new tab */}
               <a
                 href="/resume.pdf"
-                download
-                className="px-6 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-cyan-400/60 text-slate-200 hover:text-white font-mono text-xs uppercase tracking-widest font-medium backdrop-blur-md transition-all duration-300 transform hover:-translate-y-0.5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-cyan-400/60 text-slate-200 hover:text-white font-mono text-xs uppercase tracking-widest font-medium backdrop-blur-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer"
               >
-                [ DOWNLOAD RESUME ]
+                [ VIEW RESUME ]
               </a>
             </motion.div>
 

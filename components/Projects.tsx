@@ -1,22 +1,26 @@
+// components/Projects.tsx
 "use client";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink, X } from "lucide-react";
 import ParticleNetwork from "./ParticleNetwork";
 import ProjectCard, { Project } from "./ProjectCard";
 
-// Safe Demo Placeholder SVG Data URIs (Prevents any external network or image load errors)
+// SVG Data URI Image Previews
 const DEMO_IMAGES = {
   estate:
     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><path d='M250 320 L400 180 L550 320 Z' fill='none' stroke='%2338bdf8' stroke-width='4'/><rect x='340' y='250' width='120' height='70' fill='none' stroke='%2338bdf8' stroke-width='3'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>MERN Estate Preview</text></svg>",
+  university:
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><path d='M250 200 L400 130 L550 200 L400 270 Z' fill='none' stroke='%2338bdf8' stroke-width='4'/><rect x='320' y='240' width='160' height='80' fill='none' stroke='%2338bdf8' stroke-width='3'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Smart University System Preview</text></svg>",
   tourvana:
     "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><circle cx='400' cy='220' r='80' fill='none' stroke='%2322d3ee' stroke-width='4'/><path d='M320 220 Q400 140 480 220' fill='none' stroke='%2322d3ee' stroke-width='3'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Tourvana Travel Preview</text></svg>",
-  vehicle:
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><rect x='280' y='180' width='240' height='100' rx='15' fill='none' stroke='%23818cf8' stroke-width='4'/><circle cx='340' cy='280' r='20' fill='%23818cf8'/><circle cx='460' cy='280' r='20' fill='%23818cf8'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Vehicle Diagnostic Preview</text></svg>",
-  student:
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><path d='M250 200 L400 130 L550 200 L400 270 Z' fill='none' stroke='%2334d399' stroke-width='4'/><rect x='320' y='240' width='160' height='80' fill='none' stroke='%2334d399' stroke-width='3'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Student System Preview</text></svg>",
   rental:
-    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><rect x='330' y='140' width='140' height='220' rx='20' fill='none' stroke='%23f472b6' stroke-width='4'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Rental Mobile App Preview</text></svg>",
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><rect x='330' y='140' width='140' height='220' rx='20' fill='none' stroke='%23f472b6' stroke-width='4'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Vehicle Rental App Preview</text></svg>",
+  staff:
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><rect x='280' y='180' width='240' height='120' rx='12' fill='none' stroke='%2334d399' stroke-width='4'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>Staff Member MVC Preview</text></svg>",
+  chatbot:
+    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450'><rect width='100%' height='100%' fill='%230f172a'/><rect x='280' y='180' width='240' height='100' rx='15' fill='none' stroke='%23818cf8' stroke-width='4'/><circle cx='340' cy='280' r='20' fill='%23818cf8'/><circle cx='460' cy='280' r='20' fill='%23818cf8'/><text x='50%' y='85%' dominant-baseline='middle' text-anchor='middle' fill='%2394a3b8' font-family='sans-serif' font-size='20'>AI Chatbot Assistant Preview</text></svg>",
 };
 
 const PROJECTS: Project[] = [
@@ -26,113 +30,148 @@ const PROJECTS: Project[] = [
     title: "MERN Estate",
     subtitle: "Real Estate Marketplace",
     description:
-      "A full-stack real estate platform where users can browse, create, and manage property listings with real-time filters.",
+      "A full-stack real estate platform where users can browse, create, and manage property listings with real-time search filters and secure authentication.",
     image: DEMO_IMAGES.estate,
     tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Firebase"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/mern-state.git",
+    liveUrl: "https://github.com/Malinda-Rathnayaka/MERN-Estate",
     caseStudy: {
       problem:
-        "Finding and managing property listings can be difficult when information is scattered across different platforms.",
+        "Finding and managing property listings can be difficult when information is scattered across unoptimized platforms.",
       solution:
-        "I built a full-stack real estate platform allowing users to browse, create and manage property listings in real time with high-performance search filters.",
-      roles: ["Frontend", "Backend", "Database", "Authentication", "State Management"],
-      architecture: ["React", "↓", "REST API", "↓", "Express", "↓", "MongoDB"],
+        "Engineered a full-stack real estate platform allowing users to search, create, and manage property listings with persistent state and image handling.",
+      roles: ["Full Stack Developer", "Database Architecture", "Authentication"],
+      architecture: ["React UI", "↓", "REST API", "↓", "Express Server", "↓", "MongoDB"],
       technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Firebase"],
       challenges:
-        "Implementing secure image uploads, token-based authentication, and maintaining persistent application state across page reloads.",
+        "Implementing secure token-based authentication and handling multi-file cloud image uploads while ensuring optimal site speed.",
       learned:
-        "Full-stack application architecture, REST API design principles, database management, and cloud image bucket integration.",
+        "Full-stack web application structure, JWT session security, and state management optimization.",
+    },
+  },
+  {
+    id: "smart-university-system",
+    number: "02",
+    title: "Smart University System",
+    subtitle: "University Management System",
+    description:
+      "An integrated university management system designed to streamline student registration, course tracking, and administrative records.",
+    image: DEMO_IMAGES.university,
+    tags: ["Java", "MySQL", "JDBC", "HTML/CSS", "Servlets"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/smart-university-system.git",
+    liveUrl: "https://github.com/Malinda-Rathnayaka/smart-university-system",
+    caseStudy: {
+      problem:
+        "Academic institutions require central database solutions to manage student enrollment and course records without data duplication.",
+      solution:
+        "Built a relational university portal allowing administrators to manage academic schedules and student files efficiently.",
+      roles: ["Backend Developer", "Database Architect"],
+      architecture: ["Frontend Interface", "↓", "Java Servlets", "↓", "MySQL Database"],
+      technologies: ["Java", "MySQL", "JDBC", "Servlets", "Bootstrap"],
+      challenges:
+        "Designing normalized database schemas to hold complex relations between students, modules, and instructors.",
+      learned:
+        "Relational database design, enterprise Java development, and multi-tier system architecture.",
     },
   },
   {
     id: "tourvana",
-    number: "02",
+    number: "03",
     title: "Tourvana",
-    subtitle: "Travel / Tourism Web Application",
+    subtitle: "Travel & Tourism Web App",
     description:
-      "An intuitive web application for exploring destinations, travel itineraries, and weather forecasts with REST API integrations.",
+      "An interactive web platform for discovering travel destinations, satellite maps, itineraries, and live weather conditions.",
     image: DEMO_IMAGES.tourvana,
-    tags: ["React", "JavaScript", "API", "CSS3"],
+    tags: ["React", "JavaScript", "REST API", "CSS3", "HTML5"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/Tourvana_All.git",
+    liveUrl: "https://github.com/Malinda-Rathnayaka/Tourvana_All",
     caseStudy: {
       problem:
-        "Travelers often struggle to find clear, centralized travel information and destination weather details before planning a trip.",
+        "Travelers lack centralized platforms that combine country details, interactive geographic maps, and weather updates in one place.",
       solution:
-        "Engineered an interactive travel platform that fetches real-time country details, satellite locations, and weather forecasts through third-party APIs.",
-      roles: ["Frontend Development", "API Integration", "UI/UX Design"],
-      architecture: ["React UI", "↓", "Fetch API", "↓", "Public Travel & Weather APIs"],
+        "Developed a responsive travel application that integrates multiple third-party APIs to deliver real-time destination insights.",
+      roles: ["Frontend Developer", "API Integration Specialist"],
+      architecture: ["React Client", "↓", "Asynchronous Fetch Layer", "↓", "Public APIs"],
       technologies: ["React", "JavaScript", "REST APIs", "CSS3", "HTML5"],
       challenges:
-        "Managing multiple asynchronous API requests and handling fallback UI states when third-party services respond slowly.",
+        "Orchestrating concurrent asynchronous REST API calls while ensuring smooth UI rendering and fallback error states.",
       learned:
-        "Asynchronous JavaScript handling, state management with hooks, and responsive UI layout patterns.",
-    },
-  },
-  {
-    id: "vehicle-fault-assistant",
-    number: "03",
-    title: "Vehicle Fault Assistant",
-    subtitle: "AI Diagnostic Chatbot",
-    description:
-      "An AI-powered diagnostic chatbot that interprets vehicle symptoms in plain text and generates actionable troubleshooting steps using Gemini API.",
-    image: DEMO_IMAGES.vehicle,
-    tags: ["JavaScript", "Gemini API", "HTML5", "Bootstrap"],
-    caseStudy: {
-      problem:
-        "Car owners often face unexpected vehicle warnings or mechanical sounds and don't know the potential cause or urgency.",
-      solution:
-        "Built an interactive diagnostic assistant powered by Google's Gemini API that interprets plain language fault descriptions and outputs actionable troubleshooting guidance.",
-      roles: ["Frontend Developer", "AI Prompt Engineer", "API Integrator"],
-      architecture: ["User Prompt", "↓", "Client API Layer", "↓", "Google Gemini API"],
-      technologies: ["JavaScript", "Gemini API", "HTML5", "CSS3", "Bootstrap 5"],
-      challenges:
-        "Structuring system prompts effectively to ensure AI diagnostic output remains accurate, structured, and easy to read.",
-      learned:
-        "LLM API integration, prompt engineering techniques, and streaming/JSON response parsing in modern web applications.",
-    },
-  },
-  {
-    id: "student-management-system",
-    number: "04",
-    title: "Student Management System",
-    subtitle: "Java Desktop / Web System",
-    description:
-      "A robust management system built with Java and MySQL following MVC architecture for organizing student records and academic data.",
-    image: DEMO_IMAGES.student,
-    tags: ["Java", "MySQL", "JDBC", "MVC"],
-    caseStudy: {
-      problem:
-        "Educational institutions require centralized systems to organize student records and academic administrative tasks securely.",
-      solution:
-        "Developed a structured management system implementing strict separation of concerns through Model-View-Controller design architecture.",
-      roles: ["Database Architect", "Backend Developer", "System Designer"],
-      architecture: ["Java View (UI)", "↓", "Controller Logic", "↓", "MySQL Database"],
-      technologies: ["Java", "MySQL", "JDBC", "MVC Architecture"],
-      challenges:
-        "Ensuring relational data integrity across multiple foreign keys while maintaining clean database queries.",
-      learned:
-        "Object-Oriented Programming (OOP) principles, relational database design, and MVC framework architectural patterns.",
+        "Asynchronous JavaScript handling, state management using hooks, and responsive layout strategies.",
     },
   },
   {
     id: "vehicle-rental-app",
-    number: "05",
+    number: "04",
     title: "Vehicle Rental Mobile App",
     subtitle: "Android Mobile Application",
     description:
-      "Native Android mobile application for searching available vehicles, scheduling reservation dates, and managing booking history.",
+      "Native Android mobile application providing vehicle search, reservation date selection, and real-time booking updates.",
     image: DEMO_IMAGES.rental,
-    tags: ["Kotlin", "Android SDK", "Firebase"],
+    tags: ["Kotlin", "Android SDK", "Firebase", "XML"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/ApplicatioVecle_Rental_Mobile_Application.git",
+    liveUrl: "https://github.com/Malinda-Rathnayaka/Vehicle_Rental_Mobile_Application",
     caseStudy: {
       problem:
-        "Traditional vehicle rental workflows rely on cumbersome web interfaces or physical counters, causing slow booking experiences.",
+        "Traditional rental booking processes are often slow and lack mobile-first accessibility for users on the move.",
       solution:
-        "Created a mobile-first native Android app providing fast vehicle browsing, date scheduling, and reservation tracking.",
-      roles: ["Mobile App Developer", "UI Designer", "Backend Integrator"],
-      architecture: ["Kotlin Android UI", "↓", "Firebase Realtime DB", "↓", "Authentication"],
+        "Constructed a native Android application enabling instant vehicle scheduling and live status synchronization.",
+      roles: ["Mobile Developer", "UI/UX Designer"],
+      architecture: ["Android Layout (XML)", "↓", "Kotlin Business Logic", "↓", "Firebase Realtime DB"],
       technologies: ["Kotlin", "Android SDK", "Firebase", "XML Layouts"],
       challenges:
-        "Designing a responsive layout across various Android screen sizes while managing real-time booking state changes.",
+        "Adapting responsive native layouts across various screen dimensions and managing device lifecycle states.",
       learned:
-        "Native Android lifecycle management, Kotlin event handling, and mobile cloud integration.",
+        "Android lifecycle mechanics, Kotlin event handlers, and cloud backend synchronization.",
+    },
+  },
+  {
+    id: "staff-member-mvc",
+    number: "05",
+    title: "Staff Member System",
+    subtitle: "MVC Management Module",
+    description:
+      "Staff management module built with MVC architecture for handling employee data, roles, and school information system records.",
+    image: DEMO_IMAGES.staff,
+    tags: ["JavaScript", "HTML5", "CSS3", "Bootstrap", "MVC"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/StaffMember-MVC.git",
+    liveUrl: "https://github.com/Malinda-Rathnayaka/StaffMember-MVC",
+    caseStudy: {
+      problem:
+        "Unstructured management code leads to difficult maintenance when updating administrative tools.",
+      solution:
+        "Implemented a modular staff management system enforcing clear separation of logic, presentation, and control layers.",
+      roles: ["Software Engineer", "Architecture Designer"],
+      architecture: ["View Interface", "↓", "Controller Layer", "↓", "Data Model"],
+      technologies: ["JavaScript", "HTML5", "Bootstrap", "MySQL", "MVC Architecture"],
+      challenges:
+        "Maintaining strict layer separation between frontend DOM events and backend query handlers.",
+      learned:
+        "Model-View-Controller design pattern principles and modular codebase organization.",
+    },
+  },
+  {
+    id: "vehicle-fault-chatbot",
+    number: "06",
+    title: "Vehicle Fault Assistant",
+    subtitle: "AI Diagnostic Chatbot",
+    description:
+      "An AI chatbot interpreting vehicle fault symptoms in natural language and generating detailed troubleshooting steps using Gemini API.",
+    image: DEMO_IMAGES.chatbot,
+    tags: ["JavaScript", "Gemini API", "HTML5", "Bootstrap"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/chatbot.git",
+    liveUrl: "https://malinda-rathnayaka.github.io/chatbot/",
+    caseStudy: {
+      problem:
+        "Drivers struggle to diagnose unexpected mechanical sounds or warning symbols without immediate expert assistance.",
+      solution:
+        "Created an interactive conversational assistant that parses issue descriptions and provides diagnostic insights.",
+      roles: ["Frontend Developer", "AI Prompt Engineer"],
+      architecture: ["User Prompt Interface", "↓", "Client API Request Handler", "↓", "Google Gemini API"],
+      technologies: ["JavaScript", "Gemini API", "HTML5", "Bootstrap 5"],
+      challenges:
+        "Designing structured system prompts to consistently return accurate, safe, and readable diagnostic responses.",
+      learned:
+        "LLM API integration, prompt engineering techniques, and handling streaming responses.",
     },
   },
 ];
@@ -161,10 +200,9 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 text-cyan-400 font-mono text-xs uppercase tracking-widest"
+          className="text-cyan-400 font-mono text-xs uppercase tracking-[0.25em]"
         >
-          <span className="w-8 h-[1px] bg-cyan-400/60" />
-          
+          // PROJECTS
         </motion.div>
 
         <motion.h2
@@ -184,7 +222,7 @@ export default function Projects() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-4 max-w-2xl text-slate-300/80 text-base sm:text-lg leading-relaxed font-normal"
         >
-          A collection of full-stack web, mobile, and AI applications built with modern software architectures.
+          A showcase of full-stack, mobile, system architecture, and AI projects from my GitHub repository.
         </motion.p>
 
         {/* 3-Column Visual Cards Grid */}
@@ -222,10 +260,10 @@ export default function Projects() {
             >
               <button
                 onClick={() => setSelectedCaseStudy(null)}
-                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white flex items-center justify-center transition-colors"
+                className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-800 border border-slate-700 hover:border-cyan-400 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Close Case Study"
               >
-                ✕
+                <X className="w-5 h-5" />
               </button>
 
               <div className="border-b border-slate-800 pb-6 mb-6">
@@ -238,6 +276,22 @@ export default function Projects() {
                 <p className="text-slate-400 text-sm font-mono mt-1">
                   {selectedCaseStudy.subtitle}
                 </p>
+
+                {/* GitHub Link Action */}
+                {selectedCaseStudy.githubUrl && (
+                  <div className="mt-4">
+                    <a
+                      href={selectedCaseStudy.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700 hover:border-cyan-400 text-cyan-300 hover:text-cyan-200 font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-200 shadow-md group"
+                    >
+                      <Github className="w-4 h-4 text-cyan-400" />
+                      <span>View Source Code</span>
+                      <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-300 transition-colors" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-col gap-8">
