@@ -1,80 +1,110 @@
-Markdown
-# Malinda Rathnayaka — Software Engineer Portfolio
+# 🚀 Malinda Rathnayaka — Developer Portfolio
 
-A modern, high-performance personal portfolio built with **Next.js (App Router)**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**. Features an interactive particle background network, continuous typing animation loop, direct GitHub repository links, detailed full-stack case study modals, and an integrated PDF resume viewer.
+A modern, cinematic developer portfolio built to showcase my skills, projects, experience, and journey as a software developer.
 
----
+The portfolio features a space-inspired design with smooth animations, interactive sections, responsive layouts, and a clean modern interface.
 
-## 🛠️ Tech Stack
+## ✨ Features
 
-- **Framework:** [Next.js](https://nextjs.org/) (App Router)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Animations:** [Framer Motion](https://www.framer.com/motion/)
-- **Icons:** [Lucide React](https://lucide.dev/)
+* 🌌 Cinematic space-themed UI
+* ✨ Animated starfield and visual effects
+* 🪐 Interactive floating planet
+* 🎬 Smooth scroll and reveal animations
+* 📱 Fully responsive design
+* 💼 Projects showcase
+* 🛠️ Skills and technologies section
+* 📈 Experience timeline
+* 📬 Contact section
+* ⚡ Optimized Next.js App Router architecture
+* ♿ Reduced-motion support for accessibility
 
----
+## 🛠️ Technologies
 
-## ✨ Key Features
+* Next.js
+* React
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+* JavaScript
+* HTML5
+* CSS3
 
-- **Dynamic Typewriter Loop:** Continuous typing/erasing headline animation highlighting skills and developer roles.
-- **Interactive Particle Network:** HTML5 Canvas-based particle network reacting dynamically to cursor movement.
-- **Featured Work Grid:** 3-column responsive layout with active links to live demos and GitHub source code repositories.
-- **Detailed Case Study Modals:** Interactive popups detailing project problem statements, solutions, roles, system architecture flows, and challenges.
-- **Tabbed PDF Resume Viewer:** Direct link configured to view `resume.pdf` in a new browser tab.
-- **Responsive Dark UI:** Cyberpunk-inspired dark theme using glassmorphism, glowing gradients, and custom scrollbars.
-
----
-
-## 🚀 Featured Projects
-
-| Project Name | Stack / Technologies | Repository Link |
-| :--- | :--- | :--- |
-| **MERN Estate** | React, Node.js, Express, MongoDB, Firebase | [GitHub Repo](https://github.com/Malinda-Rathnayaka/MERN-Estate) |
-| **Smart University System** | Java, Servlets, MySQL, JDBC, HTML/CSS | [GitHub Repo](https://github.com/Malinda-Rathnayaka/smart-university-system) |
-| **Tourvana** | React, JavaScript, REST APIs, CSS3 | [GitHub Repo](https://github.com/Malinda-Rathnayaka/Tourvana_All) |
-| **Vehicle Rental Mobile App** | Kotlin, Android SDK, Firebase, XML | [GitHub Repo](https://github.com/Malinda-Rathnayaka/Vehicle_Rental_Mobile_Application) |
-| **Staff Member System** | JavaScript, Bootstrap, MySQL, MVC | [GitHub Repo](https://github.com/Malinda-Rathnayaka/StaffMember-MVC) |
-| **Vehicle Fault Assistant** | JavaScript, Google Gemini API, Bootstrap 5 | [GitHub Repo](https://github.com/Malinda-Rathnayaka/Vehicle-Fault-Assistant) |
-
----
-
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
-portfolio/
-├── app/
-│   ├── globals.css         # Global Tailwind directives & dark theme styling
-│   ├── layout.tsx          # Main root layout & metadata
-│   └── page.tsx            # Single-page portfolio application entrypoint
-├── public/
-│   ├── profile_2.jpg       # Profile picture used in Hero section
-│   └── resume.pdf          # PDF resume file opened by "View Resume" button
-├── node_modules/
-├── package.json            # Project dependencies and scripts
-├── tailwind.config.js      # Tailwind configuration
-└── tsconfig.json           # TypeScript configuration
-⚡ Getting Started
-1. Clone the repository
-Bash
-git clone [https://github.com/Malinda-Rathnayaka/portfolio.git](https://github.com/Malinda-Rathnayaka/portfolio.git)
+app/
+├── layout.tsx
+├── page.tsx
+└── globals.css
+
+components/
+├── Navbar.tsx
+├── Hero.tsx
+├── About.tsx
+├── Skills.tsx
+├── Projects.tsx
+├── ProjectCard.tsx
+├── Experience.tsx
+├── Contact.tsx
+├── Footer.tsx
+├── Starfield.tsx
+├── FloatingPlanet.tsx
+├── NebulaField.tsx
+├── Reveal.tsx
+├── SectionHeader.tsx
+└── ScrollProgress.tsx
+
+lib/
+└── data.ts
+```
+
+## 🚀 Getting Started
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Malinda-Rathnayaka/portfolio.git
+```
+
+Navigate to the project:
+
+```bash
 cd portfolio
-2. Install dependencies
-Bash
+```
+
+Install dependencies:
+
+```bash
 npm install
-3. Setup public static assets
-Ensure the following files are present inside the root /public directory:
+```
 
-public/profile_2.jpg (Hero profile photo)
+Run the development server:
 
-public/resume.pdf (Resume PDF document)
-
-4. Start the development server
-Bash
+```bash
 npm run dev
-Open http://localhost:3000 in your browser to view the project.
+```
 
-📬 Contact & Socials
-GitHub: github.com/Malinda-Rathnayaka
+Open:
 
-Developer: Malinda Rathnayaka
+```text
+http://localhost:3000
+```
+
+## 🎯 Purpose
+
+This portfolio was created to present my software development skills and projects while pursuing opportunities in the software engineering and full-stack development field.
+
+## 👨‍💻 About Me
+
+I'm Malinda Rathnayaka, an Information Technology undergraduate interested in software engineering and full-stack web development.
+
+I enjoy building practical applications and learning modern technologies across frontend and backend development.
+
+## 🔗 Connect With Me
+
+* GitHub: https://github.com/Malinda-Rathnayaka
+* LinkedIn: https://www.linkedin.com/in/malinda-rathnayaka-988887331/
+
+## 📄 License
+
+This project is available for personal and educational use.
